@@ -1,14 +1,14 @@
-const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/ecommerce_server')
+const mongoose = require('mongoose');
+require('dotenv').config();  // Load environment variables
 
-mongoose.connection.on('connected',()=> {
-    console.log ('connect to MongoDb new')
+// Use environment variable for MongoDB URI
+const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/ecommerce_server';
+
+mongoose.connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 })
+.then(() => console.log('Connected to MongoDB successfully'))
+.catch(err => console.error('MongoDB connection error:', err));
 
-mongoose.connection.on('error', (err) => {
-console.error('connection error: ',err)
-
-
-})
-
-module.exports = mongoose
+module.exports = mongoose;
